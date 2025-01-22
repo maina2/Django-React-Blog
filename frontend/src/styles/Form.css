@@ -34,3 +34,18 @@
   .form-button:hover {
     background-color: #0056b3;
   }
+  .form-footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .form-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .form-link:hover {
+    text-decoration: underline;
+  }
+  
