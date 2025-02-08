@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
@@ -94,24 +94,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# Database configuration using environment variables
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB', 'railway'),
-#         'USER': os.getenv('POSTGRES_USER', 'postgres'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'your-default-password'),
-#         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-#         'PORT': os.getenv('POSTGRES_PORT', '5432'),
-#     }
-# }
-DATABASES = {}
-DATABASES["default"] = dj_database_url.parse(
-    os.getenv(
-        "DATABASE_URL",
-        "postgresql://blogdb_rzi1_user:AXb7y4HCp4rZb1qayjhMHfOi1tYkNMLX@dpg-cu8bbhrv2p9s73c9tc8g-a.oregon-postgres.render.com/blogdb_rzi1"
-    )
-)
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://blogdb_rzi1_user:AXb7y4HCp4rZb1qayjhMHfOi1tYkNMLX@dpg-cu8bbhrv2p9s73c9tc8g-a.oregon-postgres.render.com/blogdb_rzi1')
+
+DATABASES = {
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+}
+
+# postgresql://blogdb_rzi1_user:AXb7y4HCp4rZb1qayjhMHfOi1tYkNMLX@dpg-cu8bbhrv2p9s73c9tc8g-a.oregon-postgres.render.com/blogdb_rzi1
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -150,8 +139,8 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOW_CREDENTIALS = True
 
 # Additional settings
